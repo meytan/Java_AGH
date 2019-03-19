@@ -27,3 +27,4 @@
 hs_err_pid*
 out/production/Java_AGH/META-INF/Java_AGH.kotlin_module
 .idea/workspace.xml
+*.xml
