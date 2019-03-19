@@ -2,9 +2,11 @@
 *.class
 
 /out
-
+/.idea
 # Log file
 *.log
+
+
 
 # BlueJ files
 *.ctxt
