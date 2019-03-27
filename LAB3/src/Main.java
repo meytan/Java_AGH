@@ -7,7 +7,7 @@ public class Main {
         System.in.read();
         Init.initEx1();
 
-        /*
+
         //==========================ZAD2=============================
         System.in.read();
         Init.initEx2();
@@ -23,7 +23,7 @@ public class Main {
         //==========================ZAD5=============================
         System.in.read();
         Init.initEx5();
-        */
+
 
     }
 }
