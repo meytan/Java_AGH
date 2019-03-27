@@ -2,7 +2,6 @@
 *.class
 
 /out
-/.idea
 # Log file
 *.log
 
