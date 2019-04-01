@@ -1,8 +1,6 @@
-import ex1.Additive;
 import ex1.Matrix;
-import ex1.MatrixAddition;
 import ex2.ItemRangeException;
-import ex2.ListSizeExcpetion;
+import ex2.ListSizeException;
 import ex2.Solution;
 import ex3.Substring;
 import ex4.Exercise2;
@@ -21,14 +19,11 @@ class Init {
         String[][] string1 = {{"Wisla ","Lech "},{"Slask ","Legia "}};
         String[][] string2 = {{"Krakow ","Poznan"},{"Wroclaw","Warszawa"}};
 
-        Matrix<Integer> matrix1 = new Matrix<Integer>(integer1);
-        Matrix<Integer> matrix2 = new Matrix<Integer>(integer2);
+        Matrix<Integer> matrix1 = new Matrix<>(integer1);
+        Matrix<Integer> matrix2 = new Matrix<>(integer2);
 
-        Matrix<String> matrix3 = new Matrix<String>(string1);
-        Matrix<String> matrix4 = new Matrix<String>(string2);
-
-        //Matrix<Integer> result1 = MatrixAddition.addMat(matrix1,matrix2);
-        //Matrix<String> result2 = MatrixAddition.addMat(matrix3,matrix4);
+        Matrix<String> matrix3 = new Matrix<>(string1);
+        Matrix<String> matrix4 = new Matrix<>(string2);
 
         matrix1.add(matrix2, (a, b) -> a+b);
         matrix3.add(matrix4, (a, b) -> a+b);
@@ -57,8 +52,8 @@ class Init {
 
         try {
             System.out.println(Solution.solution(list));
-        } catch (ListSizeExcpetion listSizeExcpetion) {
-            System.out.println(listSizeExcpetion.getMessage());
+        } catch (ListSizeException listSizeException) {
+            System.out.println(listSizeException.getMessage());
         } catch (ItemRangeException e) {
             System.out.println(e.getMessage());
         }

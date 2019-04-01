@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Solution {
 
-    public static int solution(List<Integer> a) throws ListSizeExcpetion, ItemRangeException {
+    public static int solution(List<Integer> a) throws ListSizeException, ItemRangeException {
 
-        if(a.size()>(int) 1E5) throw new ListSizeExcpetion();
+        if(a.size()>(int) 1E5) throw new ListSizeException();
         if(a.stream().anyMatch(q -> q > 100000)) throw new ItemRangeException();
         if(a.stream().anyMatch(q -> q < -100000)) throw new ItemRangeException();
 

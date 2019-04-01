@@ -9,7 +9,7 @@ public class Matrix<T> implements Iterable<T> {
     private int maxColIndex, maxRowIndex, currentColumn = -1, currentRow =0, columns, rows;
 
     public Matrix(T[][] matrix) {
-        this.matrix = new ArrayList<List<T>>();
+        this.matrix = new ArrayList<>();
         maxColIndex = matrix[0].length-1;
         maxRowIndex = matrix.length-1;
         columns=matrix[0].length;
@@ -17,20 +17,10 @@ public class Matrix<T> implements Iterable<T> {
 
 
         for(T[] i : matrix ){
-            List<T> tmpList = new ArrayList<T>(Arrays.asList(i));
+            List<T> tmpList = new ArrayList<>(Arrays.asList(i));
             this.matrix.add(tmpList);
 
         }
-    }
-
-    Matrix(List<List<T>> matrix) {
-        this.matrix = matrix;
-        maxColIndex = matrix.get(0).size()-1;
-        maxRowIndex = matrix.size()-1;
-        columns=matrix.get(0).size();
-        rows=matrix.size();
-
-
     }
 
     @Override
@@ -67,6 +57,8 @@ public class Matrix<T> implements Iterable<T> {
     }
 
     public void add(Matrix<T> matrix2, Additive<T> a){
+        if (this.getColumns() != matrix2.getColumns() || this.getRows() != matrix2.getRows())
+            throw new IllegalArgumentException("Can't add this matrices! They have not equal col or row number!");
         for(T i: matrix2){
             T x = this.matrix.get(matrix2.getCurrentRow()).get(matrix2.getCurrentColumn());
             this.matrix.get(matrix2.getCurrentRow()).set(matrix2.getCurrentColumn(),a.add(x,i));
@@ -74,11 +66,11 @@ public class Matrix<T> implements Iterable<T> {
     }
 
 
-    int getColumns() {
+    public int getColumns() {
         return columns;
     }
 
-    int getRows() {
+    public int getRows() {
         return rows;
     }
 
@@ -92,5 +84,9 @@ public class Matrix<T> implements Iterable<T> {
 
     public int getMaxColIndex() {
         return maxColIndex;
+    }
+
+    public List<List<T>> getMatrix() {
+        return matrix;
     }
 }
