@@ -1,11 +1,13 @@
 import javax.management.openmbean.KeyAlreadyExistsException;
-import java.security.KeyException;
+import javax.swing.text.TabableView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class FulfillmentCenterContainer {
+
+
+class FulfillmentCenterContainer{
     /* TODO addCenter() removeCenter() findEmpty()   summary() */
     Map<String,FulfillmentCenter> fulfillmentCenters = new HashMap<String,FulfillmentCenter>();
 
@@ -36,6 +38,9 @@ class FulfillmentCenterContainer {
         fulfillmentCenters.forEach((k,v) -> {
             System.out.println("Name: " + k + "\tFulfillment:" + v.getCurrentMass()/v.getMaxMass()*100+"%");
         });
+    }
+    interface a extends TabableView {
+        double dosmt();
     }
 
 
