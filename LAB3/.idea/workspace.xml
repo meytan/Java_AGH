@@ -2,18 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca637da0-bb16-4ffc-9c94-1dddd4eb746f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex1/MatrixTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex2/ItemRangeExceptionTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex2/ListSizeExceptionTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex2/SolutionTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex3/SubstringTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex4/Solution2Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex5/TestTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LAB5/.idea/LAB5.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/.idea/LAB5.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LAB5/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LAB5/src/Init.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/Init.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LAB5/src/ex1/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/ex1/Matrix.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LAB5/src/ex1/MatrixAddition.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LAB5/src/ex2/ListSizeExcpetion.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/ex2/ListSizeException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LAB5/src/ex2/Solution.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/ex2/Solution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LAB5/src/ex3/Substring.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/ex3/Substring.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LAB5/src/ex4/Exercise2.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/ex4/Solution2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LAB5/src/tests/ex2/SolutionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex2/SolutionTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

@@ -33,10 +33,10 @@ class SolutionTest {
 
     @Test
     void expectedItemRangeException(){
-        for(int i = 1; i<100001 ; i++){
+        for(int i = 2; i<100002 ; i++){
             list1.add(i);
         }
-        for(int i = -1; i>-100001 ; i--){
+        for(int i = -2; i>-100002 ; i--){
             list2.add(i);
         }
         assertThrows(ItemRangeException.class,() ->Solution.solution(list1));

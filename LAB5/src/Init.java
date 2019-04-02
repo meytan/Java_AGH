@@ -3,7 +3,7 @@ import ex2.ItemRangeException;
 import ex2.ListSizeException;
 import ex2.Solution;
 import ex3.Substring;
-import ex4.Exercise2;
+import ex4.Solution2;
 import ex5.Test;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ class Init {
     static void initEx3() {
         System.out.println();
         System.out.println("Exercise 3");
-        System.out.println(Substring.substring("abcd","cdabcdab"));
+        System.out.println(Substring.substring("","cdabcdab"));
 
     }
 
@@ -71,7 +71,7 @@ class Init {
         System.out.println("Exercise 4");
         float[] arr = {2,3,4, 7,8, 11, 15};
         float target = 9;
-        int[] res = Exercise2.solution( arr,target);
+        int[] res = Solution2.solution( arr,target);
 
         System.out.println(target+" = "+ arr[res[0]] + " + " + arr[res[1]]);
     }

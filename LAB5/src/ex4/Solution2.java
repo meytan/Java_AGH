@@ -2,7 +2,7 @@ package ex4;
 
 import java.util.Arrays;
 
-public class Exercise2 {
+public class Solution2 {
 
     public static int[] solution (float[] arr, float target) {
 
