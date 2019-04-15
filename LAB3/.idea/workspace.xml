@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ca637da0-bb16-4ffc-9c94-1dddd4eb746f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex3/SubstringTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex4/Solution2Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex5/TestTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LAB5/src/Init.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/Init.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LAB5/src/ex3/Substring.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/ex3/Substring.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LAB5/src/ex4/Exercise2.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/ex4/Solution2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LAB5/src/tests/ex2/SolutionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LAB5/src/tests/ex2/SolutionTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="ca637da0-bb16-4ffc-9c94-1dddd4eb746f" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +50,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="260" />
     <option name="y" value="20" />
     <option name="width" value="1400" />
@@ -146,8 +137,7 @@
     <option name="totallyTimeSpent" value="1687000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="260" y="20" width="1400" height="995" extended-state="1" />
-    <editor active="true" />
+    <frame x="260" y="20" width="1400" height="995" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26077265" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
