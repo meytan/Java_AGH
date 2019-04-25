@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
@@ -58,15 +59,22 @@ public class MonteCarlo extends Task<Double> {
             updateProgress(i,points);
 
 
-            if(i%1000 == 0 ){
-                gc.drawImage(SwingFXUtils.toFXImage(bi, null), 0,0);
+            if(i%10000 == 0 ){
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        gc.drawImage(SwingFXUtils.toFXImage(bi, null), 0,0);
+
+                    }
+                });
 
             }
 
         }
 
 
-        return 64*((double)hitted/i);
+        return 16*16*((double)hitted/i);
     }
 
 
