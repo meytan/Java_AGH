@@ -81,7 +81,9 @@ public class MainController implements Initializable {
             new SeparatorMenuItem(),
             new MenuItem("Add to To Do List"),
             new MenuItem("Add to In Progress List"),
-            new MenuItem("Add to Done List")
+            new MenuItem("Add to Done List"),
+            new SeparatorMenuItem(),
+            new MenuItem("Delete")
         );
 
         todoList.setOnMouseClicked(onClick());
@@ -129,18 +131,21 @@ public class MainController implements Initializable {
                         contextMenu.getItems().get(2).setVisible(false);
                         contextMenu.getItems().get(3).setOnAction(menuItemEventHandler(todoList, inProgressList));
                         contextMenu.getItems().get(4).setOnAction(menuItemEventHandler(todoList, doneList));
+                        contextMenu.getItems().get(6).setOnAction(deleteEventHandler(todoList));
                         break;
                     case "inProgressList":
                         contextMenu.getItems().get(0).setOnAction(editEventHandler(inProgressList));
                         contextMenu.getItems().get(3).setVisible(false);
                         contextMenu.getItems().get(2).setOnAction(menuItemEventHandler(inProgressList, todoList));
                         contextMenu.getItems().get(4).setOnAction(menuItemEventHandler(inProgressList, doneList));
+                        contextMenu.getItems().get(6).setOnAction(deleteEventHandler(inProgressList));
                         break;
                     case "doneList":
                         contextMenu.getItems().get(0).setOnAction(editEventHandler(doneList));
                         contextMenu.getItems().get(4).setVisible(false);
                         contextMenu.getItems().get(2).setOnAction(menuItemEventHandler(doneList, todoList));
                         contextMenu.getItems().get(3).setOnAction(menuItemEventHandler(doneList, inProgressList));
+                        contextMenu.getItems().get(6).setOnAction(deleteEventHandler(doneList));
                         break;
                 }
 
@@ -172,6 +177,11 @@ public class MainController implements Initializable {
             Task task = source.getItems().get(source.getSelectionModel().getSelectedIndices().get(0));
             AddController addController = new AddController(this, task);
             addController.showStage();
+        };
+    }
+    EventHandler<ActionEvent> deleteEventHandler(ListView<Task> source){
+        return event ->{
+            source.getItems().remove(source.getItems().get(source.getSelectionModel().getSelectedIndices().get(0)));
         };
     }
 
