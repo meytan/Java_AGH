@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,12 +10,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
+import static javafx.scene.input.KeyCode.P;
+import static javafx.scene.input.KeyCode.T;
 
 public class MainController implements Initializable {
 
@@ -34,6 +43,8 @@ public class MainController implements Initializable {
     private MenuItem copy;
     private MenuItem paste;
     private ContextMenu contextMenu;
+
+    private static final String CSV_SEPARATOR = ",";
 
     public MainController() {
 
@@ -90,13 +101,13 @@ public class MainController implements Initializable {
         inProgressList.setOnMouseClicked(onClick());
         doneList.setOnMouseClicked(onClick());
 
-        todo.add(new Task("elo", Priority.NORMAL, LocalDate.now(), "asdfjaksldf"));
-        todo.add(new Task("elo", Priority.LOW, LocalDate.now(), "asdfjaksldf"));
-        todo.add(new Task("elo", Priority.HIGH, LocalDate.now(), "asdfjaksldf"));
-        todo.add(new Task("elo", Priority.HIGH, LocalDate.now(), "asdfjaksldf"));
-        todo.add(new Task("elo", Priority.HIGH, LocalDate.now(), "asdfjaksldf"));
-        inProgress.add(new Task("elo", Priority.HIGH, LocalDate.now(), "asdfjaksldf"));
-        done.add(new Task("elo", Priority.HIGH, LocalDate.now(), "asdfjaksldf"));
+//        todo.add(new Task("elo", Priority.NORMAL, LocalDate.now(), "asdfjaksldf"));
+//        todo.add(new Task("elo", Priority.LOW, LocalDate.now(), "asdfjaksldf"));
+//        todo.add(new Task("elo", Priority.HIGH, LocalDate.now(), "asdfjaksldf"));
+//        todo.add(new Task("elo", Priority.HIGH, LocalDate.now(), "asdfjaksldf"));
+//        todo.add(new Task("elo", Priority.HIGH, LocalDate.now(), "asdfjaksldf"));
+//        inProgress.add(new Task("elo", Priority.HIGH, LocalDate.now(), "asdfjaksldf"));
+//        done.add(new Task("elo", Priority.HIGH, LocalDate.now(), "asdfjaksldf"));
 
 
     }
@@ -183,6 +194,177 @@ public class MainController implements Initializable {
         return event ->{
             source.getItems().remove(source.getItems().get(source.getSelectionModel().getSelectedIndices().get(0)));
         };
+    }
+
+    public void handleOpenAction(){
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            File file = fileChooser.showOpenDialog(primaryStage);
+
+            if(file == null) throw new IOException("File not choose");
+
+            List<Task>[] list = new List[3];
+
+            FileInputStream fileIn = new FileInputStream(file);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            list = (List<Task>[]) in.readObject();
+
+            in.close();
+            fileIn.close();
+
+            todo.clear();
+            inProgress.clear();
+            done.clear();
+
+            todo.addAll(list[0]);
+            inProgress.addAll(list[1]);
+            done.addAll(list[2]);
+        } catch (IOException i) {
+            i.printStackTrace();
+            return;
+        } catch (ClassNotFoundException c) {
+            System.out.println("List<Task> class not found");
+            c.printStackTrace();
+            return;
+        }
+
+
+
+    }
+
+    public void handleSaveAction()  {
+        try{
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save File");
+            File file = fileChooser.showSaveDialog(primaryStage);
+
+            FileOutputStream fileOut = new FileOutputStream(file);
+
+            List<Task>[] list = new List[3];
+            list[0] = getListFromObservableList(todo);
+            list[1] = getListFromObservableList(inProgress);
+            list[2] = getListFromObservableList(done);
+
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(list);
+
+            out.close();
+            fileOut.close();
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+
+    }
+
+    public void handleImportAction() {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Import CSV File");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+            File file = fileChooser.showOpenDialog(primaryStage);
+
+            if(file == null) throw new IOException("File not choose");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            ObservableList<Task> list = null;
+            String str;
+
+            todo.clear();
+            inProgress.clear();
+            done.clear();
+
+            while ((str = br.readLine()) != null)
+            {
+                if(str.equals("ToDo:")) list = todo;
+                else if(str.equals("In Progress:")) list = inProgress;
+                else if(str.equals("Done:")) list = done;
+                else{
+                    String[] attr = str.split(CSV_SEPARATOR);
+                    String[] date = attr[2].split("-");
+                    LocalDate localDate = LocalDate.of(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2]));
+                    list.addAll(new Task(attr[0],setPriority(attr[1]), localDate,attr[3] ));
+                }
+
+            }
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void handleExportAction(){
+        try
+        {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Export CSV");
+            File file = fileChooser.showSaveDialog(primaryStage);
+            if (!file.getName().endsWith(".csv")){
+                file = new File(file.getPath() + ".csv");
+            }
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+            bw.write("ToDo:");
+            bw.newLine();
+            for (Task task : todo){
+                bw.write(formatToCSV(task));
+                bw.newLine();
+            }
+            bw.write("In Progress:");
+            bw.newLine();
+            for (Task task : inProgress){
+                bw.write(formatToCSV(task));
+                bw.newLine();
+            }
+            bw.write("Done:");
+            bw.newLine();
+            for (Task task : done){
+                bw.write(formatToCSV(task));
+                bw.newLine();
+            }
+
+            bw.flush();
+            bw.close();
+        }
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private List<Task> getListFromObservableList(ObservableList<Task> observableList){
+        List<Task> list = new ArrayList<>();
+        for(int i = 0; i < observableList.size(); i++){
+            list.add(observableList.get(i));
+        }
+        return list;
+    }
+
+    private String formatToCSV(Task task)
+    {
+        StringBuffer oneLine = new StringBuffer();
+        oneLine.append(task.getTitle());
+        oneLine.append(CSV_SEPARATOR);
+        oneLine.append(task.getPriority());
+        oneLine.append(CSV_SEPARATOR);
+        oneLine.append(task.getExpDate());
+        oneLine.append(CSV_SEPARATOR);
+        oneLine.append(task.getDescription());
+        return oneLine.toString();
+    }
+
+    private Priority setPriority(String s){
+        if( s.equals("LOW")) return Priority.LOW;
+        else if( s.equals("NORMAL")) return Priority.NORMAL;
+        else return Priority.HIGH;
     }
 
 

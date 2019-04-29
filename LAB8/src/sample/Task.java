@@ -2,10 +2,11 @@ package sample;
 
 import javafx.scene.control.ListCell;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
-public class Task extends ListCell {
+public class Task extends ListCell implements Serializable {
     private String title;
     private Priority priority;
     private LocalDate expDate;
@@ -46,4 +47,6 @@ public class Task extends ListCell {
     public String toString() {
         return title;
     }
+
+
 }
