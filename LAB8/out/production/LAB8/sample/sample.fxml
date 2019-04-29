@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <MenuBar style="-fx-text-fill: black;" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" >
+            <graphic>
+               <Label style="-fx-text-fill: darkslategray" text="File"/>
+            </graphic>
+             <items>
+                  <MenuItem mnemonicParsing="false" text="Open" onAction="#handleOpenAction"/>
+                  <MenuItem mnemonicParsing="false" text="Save" onAction="#handleSaveAction" />
+                  <MenuItem mnemonicParsing="false" text="Import" onAction="#handleImportAction"/>
+                  <MenuItem mnemonicParsing="false" text="Export" onAction="#handleExportAction"/>
+              <MenuItem mnemonicParsing="false" onAction="#handleCloseAction" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" onAction="#handleAboutAction">
+               <graphic>
+                  <Label onMouseClicked="#handleAboutAction" style="-fx-text-fill: darkslategray;" text="About" />
+               </graphic></Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#add_new_task_clicked" text="ADD NEW TASK" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="15.0" />
+         </BorderPane.margin></Button>
+   </bottom>
+   <center>
+      <HBox styleClass="bor" BorderPane.alignment="CENTER">
+         <children>
+            <Region HBox.hgrow="ALWAYS" />
+            <VBox alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
+               <children>
+                  <Region minHeight="25.0" />
+                  <Label fx:id="todoLabel" alignment="CENTER" contentDisplay="CENTER" text="TODO" textAlignment="CENTER" />
+                  <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                     <content>
+                        <ListView fx:id="todoList">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </ListView>
+                     </content>
+                  </ScrollPane>
+                  <Region minHeight="25.0" />
+               </children>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Region minHeight="25.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="IN PROGRESS" VBox.vgrow="ALWAYS" />
+                  <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                     <content>
+                        <ListView fx:id="inProgressList">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </ListView>
+                     </content>
+                  </ScrollPane>
+                  <Region minHeight="25.0" />
+               </children>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Region minHeight="25.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="DONE" VBox.vgrow="ALWAYS" />
+                  <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                     <content>
+                        <ListView fx:id="doneList">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </ListView>
+                     </content>
+                  </ScrollPane>
+                  <Region minHeight="25.0" />
+               </children>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+         </children>
+         <opaqueInsets>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </opaqueInsets>
+      </HBox>
+   </center>
+</BorderPane>
