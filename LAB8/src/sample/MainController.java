@@ -277,14 +277,19 @@ public class MainController implements Initializable {
 
             while ((str = br.readLine()) != null)
             {
-                if(str.equals("ToDo:")) list = todo;
-                else if(str.equals("In Progress:")) list = inProgress;
-                else if(str.equals("Done:")) list = done;
-                else{
-                    String[] attr = str.split(CSV_SEPARATOR);
-                    String[] date = attr[2].split("-");
-                    LocalDate localDate = LocalDate.of(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2]));
-                    list.addAll(new Task(attr[0],setPriority(attr[1]), localDate,attr[3] ));
+                try {
+                    if (str.equals("ToDo:")) list = todo;
+                    else if (str.equals("In Progress:")) list = inProgress;
+                    else if (str.equals("Done:")) list = done;
+                    else {
+                        String[] attr = str.split(CSV_SEPARATOR);
+                        String[] date = attr[2].split("-");
+                        LocalDate localDate = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+                        list.addAll(new Task(attr[0], setPriority(attr[1]), localDate, attr[3]));
+                    }
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("Invalid row!");
                 }
 
             }
