@@ -22,7 +22,7 @@ public class MyErrorController implements ErrorController {
                 return "error-404: image not found";
             }
             else if(statusCode == HttpStatus.BAD_REQUEST.value()){
-                return "error-400: bad request - values to crop are invalid";
+                return "error-400: bad request";
             }
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return "error-500";

@@ -74,6 +74,9 @@ public class WebController {
         catch (NullPointerException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "image not found");
         }
+        catch (IllegalArgumentException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "wrong");
+        }
     }
 
     @RequestMapping(value = "/image/{id}/histogram")

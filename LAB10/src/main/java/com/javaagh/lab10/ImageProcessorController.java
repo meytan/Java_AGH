@@ -35,6 +35,7 @@ public class ImageProcessorController {
     }
 
     public BufferedImage getScaledImage(String id, double scale){
+        if(scale < 0) throw new IllegalArgumentException();
 //        BufferedImage scaledImg = new BufferedImage((int)(img.getWidth() * scale), (int)(img.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
         BufferedImage before = images.get(id);
         int w = (int)(before.getWidth() * scale);
