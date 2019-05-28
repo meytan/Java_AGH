@@ -127,12 +127,18 @@ public class WebController {
     public String getStats(){
 
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("select s.userID, count(s.surveyId) from com.example.lab11.Survey s GROUP BY s.userID ORDER BY count(s.surveyId) DESC");
-        List<Object[]> list = (List<Object[]>) query.list();
+        Query query1 = session.createQuery("select count(s.surveyId), s.userID from com.example.lab11.Survey s GROUP BY s.userID ORDER BY count(s.surveyId) DESC");
+        List<Object[]> list1 = (List<Object[]>) query1.list();
+        Query query2 = session.createQuery("select a.userID, count(a.answerID) from com.example.lab11.Answer a GROUP BY a.userID ORDER BY count(a.answerID) DESC");
+        List<Object[]> list2 = (List<Object[]>) query2.list();
+        Query query3 = session.createQuery("select count(*) from com.example.lab11.Survey s");
+        Long surveyAmount = (Long) query3.getSingleResult();
+
+
 
 
 //        List<Object[]> list1 = (List<Object[]>) query1.list();
-        return "asd";
+        return JSONBuilder.makeStat(surveyAmount,list1,list2);
 
     }
 }
