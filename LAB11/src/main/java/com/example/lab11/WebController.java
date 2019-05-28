@@ -5,9 +5,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManagerFactory;
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
@@ -25,6 +28,17 @@ public class WebController {
 
     @Autowired
     private AnswerRepository answerRepository;
+
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public WebController(EntityManagerFactory factory) {
+        if(factory.unwrap(SessionFactory.class) == null){
+            throw new NullPointerException("factory is not a hibernate factory");
+        }
+        this.sessionFactory = factory.unwrap(SessionFactory.class);
+    }
+
 
 
 
@@ -92,7 +106,6 @@ public class WebController {
     public String getAnswer(@PathVariable int id) {
         Gson gson = new Gson();
         Answer answer = answerRepository.findById(id).get();
-
         return gson.toJson(answer);
     }
 
@@ -100,36 +113,26 @@ public class WebController {
     public String getUserStats(@PathVariable int id){
 
         Session session = sessionFactory.openSession();
-        String q ="select count(*) from survey";
-        Query query = session.createQuery(q);
-        int surveyAmount = query.getFetchSize();
-
-//        int surveyAmount = surveyRepository.findAll().stream().filter(a -> a.getUserID() == id).collect(Collectors.toList()).size();
-
-
-
-        List<Answer> answers = answerRepository.findAll().stream().filter(a -> a.getUserID() == id).collect(Collectors.toList());
-        Map<Integer, Double> avgAnswer = answers.stream().collect(Collectors.groupingBy(Answer::getSurveyID, Collectors.averagingInt(Answer::getRating)));
-        Map<Integer, Long> amountAnswer = answers.stream().collect(Collectors.groupingBy(Answer::getSurveyID, Collectors.counting()));
-        StringBuilder json = new StringBuilder("{\"userid\":");
-        json.append(surveyAmount);
-        json.append(", \"avg_answers\": [");
-        for(Map.Entry<Integer, Double> entry : avgAnswer.entrySet()) {
-            Integer key = entry.getKey();
-            Double value = entry.getValue();
-            json.append("\""+key+"\":"+ value+",");
-
-        }
-        json.append("],\"answerAmount\":[");
-        for(Map.Entry<Integer, Long> entry : amountAnswer.entrySet()) {
-            Integer key = entry.getKey();
-            Long value = entry.getValue();
-            json.append("\""+key+"\":"+ value+",");
-        }
-        json.append("]}");
-
-        return json.toString();
+        Query query = session.createQuery("select count(*) from com.example.lab11.Survey s where s.userID = :id");
+        query.setParameter("id", id);
+        Long surveyAmount = (Long) query.getSingleResult();
+        Query query1 = session.createQuery("select a.surveyID, avg(a.rating), count(a.answerID) from com.example.lab11.Answer a where a.userID = :id GROUP BY a.surveyID");
+        query1.setParameter("id", id);
+        List<Object[]> list1 = (List<Object[]>) query1.list();
+        return JSONBuilder.makeUserStat(surveyAmount, list1);
 
     }
 
+    @GetMapping(value= "api/stats")
+    public String getStats(){
+
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select s.userID, count(s.surveyId) from com.example.lab11.Survey s GROUP BY s.userID ORDER BY count(s.surveyId) DESC");
+        List<Object[]> list = (List<Object[]>) query.list();
+
+
+//        List<Object[]> list1 = (List<Object[]>) query1.list();
+        return "asd";
+
+    }
 }

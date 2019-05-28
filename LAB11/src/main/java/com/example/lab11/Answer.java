@@ -12,7 +12,7 @@ public class Answer {
     private int answerID;
     private int surveyID;
     private int userID;
-    private int rating;
+    private double rating;
 
     public int getAnswerID() {
         return answerID;
@@ -38,7 +38,7 @@ public class Answer {
         this.userID = userID;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 

@@ -12,6 +12,7 @@ public class Survey {
 
     private String surveyTitle;
     private String question;
+
     private int userID;
 
     @Override
