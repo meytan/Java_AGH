@@ -1,7 +1,7 @@
 package com.example.lab13;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.hardware.Sensor;
@@ -9,16 +9,13 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.TranslateAnimation;
-import android.view.animation.Animation.AnimationListener;
-import android.widget.Button;
+
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,6 +26,8 @@ public class MainActivity extends Activity implements SensorEventListener {
     private Sensor sensor;
     private SensorManager sm;
     private Ball ball;
+    private Timer timer;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +49,11 @@ public class MainActivity extends Activity implements SensorEventListener {
         ball.setSize(dpTpPx(80));
         ball.setAreaH(dpTpPx(600));
         ball.setAreaW(dpTpPx(300));
-
-
-
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                ball.move();
-                if(ball.isGameOver()) {
-                    Log.i(TAG, "LOSTTTTTTTTTTTTTTTTT!!!!!!!!!!!!!!!!");
-//                    showAlert();
-                }
-            }
-        }, 0, 1000/70);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        ball.setScreenY(displayMetrics.heightPixels);
+        ball.setScreenX(displayMetrics.widthPixels);
+        startGame();
 
 
     }
@@ -91,37 +82,41 @@ public class MainActivity extends Activity implements SensorEventListener {
         );
     }
 
-//    public void showAlert(){
-//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-//                this);
-//
-//        // set title
-//        alertDialogBuilder.setTitle("Your Title");
-//
-//        // set dialog message
-//        alertDialogBuilder
-//                .setMessage("Click yes to exit!")
-//                .setCancelable(false)
-//                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog,int id) {
-//                        // if this button is clicked, close
-//                        // current activity
-//                        MainActivity.this.finish();
-//                    }
-//                })
-//                .setNegativeButton("No",new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog,int id) {
-//                        // if this button is clicked, just close
-//                        // the dialog box and do nothing
-//                        dialog.cancel();
-//                    }
-//                });
-//
-//        // create alert dialog
-//        AlertDialog alertDialog = alertDialogBuilder.create();
-//
-//        // show it
-//        alertDialog.show();
-//    }
+    private void startGame(){
+        timer= new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                ball.move();
+                if(ball.isGameOver()) {
+                    Log.i(TAG, "LOSTTTTTTTTTTTTTTTTT!!!!!!!!!!!!!!!!");
+                    resetGame();
+                }
+            }
+        }, 0, 1000/70);
+
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                ball.randomMove();
+            }
+        }, 0, 3000);
+
+    }
+
+    private void resetGame(){
+        timer.cancel();
+        timer.purge();
+        ball.reset();
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(context, "GAME OVER! Try again", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        startGame();
+
+    }
+
 
 }
